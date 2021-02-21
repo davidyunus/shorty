@@ -7,6 +7,8 @@ How to run shorty
 1. Migrate url table from migration file
 2. `go run cmd/main.go` 
 
+note: docker and test file will be updated soon
+
 ### POST /v1/shorten
 
 ```
