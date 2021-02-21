@@ -42,16 +42,18 @@ func CreateURL() http.HandlerFunc {
 			return nil
 		}
 
-		uri, err := app.Services.URL.GetURL(ctx, u.Shortcode)
-		if err != nil {
-			return err
-		}
-		if uri != nil {
-			response.WithError(w, http.StatusConflict, "The the desired shortcode is already in use. Shortcodes are case-sensitive.")
-			return nil
+		if u.Shortcode != "" {
+			uri, err := app.Services.URL.GetURL(ctx, u.Shortcode)
+			if err != nil {
+				return err
+			}
+			if uri != nil {
+				response.WithError(w, http.StatusConflict, "The the desired shortcode is already in use. Shortcodes are case-sensitive.")
+				return nil
+			}
 		}
 
-		uri, err = app.Services.URL.CreateURL(ctx, u.URL, u.Shortcode)
+		uri, err := app.Services.URL.CreateURL(ctx, u.URL, u.Shortcode)
 		if err != nil {
 			return err
 		}

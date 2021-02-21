@@ -53,8 +53,7 @@ func (s *Service) GetURL(ctx context.Context, short string) (*url.Url, error) {
 	if err != nil {
 		return nil, err
 	}
-	uri.LastSeenDate = time.Now()
-	err = s.url.Update(ctx, uri)
+
 	return uri, err
 }
 
@@ -63,6 +62,9 @@ func (s *Service) GetURLandAddCount(ctx context.Context, short string) (*url.Url
 	query := `"shortcode" = $1`
 	uri, err := s.url.Single(ctx, query, short)
 	if err != nil {
+		return nil, err
+	}
+	if uri == nil {
 		return nil, err
 	}
 	uri.RedirectCount++
